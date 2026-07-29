@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunshine Systems Projetos — Elétrica, Segurança e Automação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10141a;
+    --panel:#171d25;
+    --panel-2:#1c232c;
+    --line:#2a3340;
+    --sunshine:#f6a623;
+    --sunshine-dim:#8a6421;
+    --signal:#3ed6c0;
+    --paper:#edeff3;
+    --mute:#8a93a3;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:"IBM Plex Mono",monospace;}
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  ::selection{background:var(--sunshine);color:var(--ink);}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+
+  /* ---------- trace pattern (signature device) ---------- */
+  .trace-dot{fill:var(--signal);}
+  .trace-line{stroke:var(--line);stroke-width:1;fill:none;}
+  .trace-line.live{stroke:var(--sunshine-dim);}
+  @media (prefers-reduced-motion:no-preference){
+    .pulse{
+      stroke-dasharray:6 300;
+      animation:travel 5.5s linear infinite;
+    }
+    .pulse.d2{animation-delay:1.4s;}
+    .pulse.d3{animation-delay:2.9s;}
+    .pulse.d4{animation-delay:.7s;}
+    @keyframes travel{
+      0%{stroke-dashoffset:0;opacity:0;}
+      4%{opacity:1;}
+      92%{opacity:1;}
+      100%{stroke-dashoffset:-320;opacity:0;}
+    }
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(16,20,26,.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;max-width:1180px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .brand-word{line-height:1;}
+  .brand-word .l1{font-size:16px;font-weight:700;letter-spacing:.02em;}
+  .brand-word .l2{font-size:10px;color:var(--mute);letter-spacing:.22em;margin-top:3px;}
+  .navlinks{display:flex;list-style:none;margin:0;padding:0;font-size:14px;}
+  .navlinks li{margin-right:36px;}
+  .navlinks li:last-child{margin-right:0;}
+  .navlinks a{text-decoration:none;color:var(--mute);transition:color .15s;white-space:nowrap;}
+  .navlinks a:hover{color:var(--paper);}
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--sunshine);color:#1a1204;
+    padding:10px 18px;border-radius:var(--radius);
+    text-decoration:none;font-size:13px;font-weight:600;
+    white-space:nowrap;
+  }
+  .nav-toggle{display:none;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:96px 0 110px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-bg{position:absolute;inset:0;width:100%;height:100%;opacity:.9;}
+  .hero-inner{position:relative;z-index:2;max-width:760px;}
+  .eyebrow{
+    font-size:12px;letter-spacing:.18em;color:var(--signal);
+    display:flex;align-items:center;gap:10px;margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:20px;height:1px;background:var(--signal);}
+  .hero h1{
+    font-size:clamp(34px,5.4vw,58px);
+    font-weight:700;line-height:1.05;
+    margin-bottom:22px;
+  }
+  .hero h1 em{color:var(--sunshine);font-style:normal;}
+  .hero p{
+    font-size:17px;line-height:1.6;color:var(--mute);max-width:540px;margin-bottom:34px;
+  }
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 24px;border-radius:var(--radius);
+    text-decoration:none;font-size:14px;font-weight:600;
+    border:1px solid transparent;transition:transform .12s,background .15s;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--sunshine);color:#1a1204;}
+  .btn-primary:hover{background:#ffb745;}
+  .btn-ghost{border-color:var(--line);color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--signal);}
+
+  /* ---------- section shell ---------- */
+  section{padding:88px 0;}
+  .sec-head{max-width:600px;margin-bottom:52px;}
+  .sec-head .mono{font-size:12px;letter-spacing:.18em;color:var(--signal);display:block;margin-bottom:14px;}
+  .sec-head h2{font-size:clamp(26px,3.4vw,36px);font-weight:600;margin-bottom:14px;}
+  .sec-head p{color:var(--mute);font-size:16px;line-height:1.6;}
+
+  /* ---------- services grid ---------- */
+  .grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);
+  }
+  .card{
+    background:var(--panel);padding:30px 26px;
+    display:flex;flex-direction:column;gap:16px;
+    min-height:210px;
+    transition:background .18s;
+  }
+  .card:hover{background:var(--panel-2);}
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;}
+  .card-code{
+    font-size:11px;color:var(--sunshine);letter-spacing:.1em;
+    border:1px solid var(--sunshine-dim);padding:3px 7px;border-radius:2px;
+  }
+  .card svg{width:30px;height:30px;stroke:var(--paper);}
+  .card h3{font-size:16px;font-weight:600;margin-bottom:2px;}
+  .card p{font-size:13.5px;color:var(--mute);line-height:1.55;margin:0;}
+
+  /* ---------- why us ---------- */
+  .why{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:36px;
+  }
+  .why-item{border-top:1px solid var(--line);padding-top:20px;}
+  .why-item .num{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--signal);display:block;margin-bottom:12px;}
+  .why-item h3{font-size:16px;font-weight:600;margin-bottom:8px;}
+  .why-item p{font-size:14px;color:var(--mute);line-height:1.6;margin:0;}
+
+  /* ---------- process ---------- */
+  .process{
+    display:flex;border:1px solid var(--line);
+  }
+  .step{
+    flex:1;padding:28px 24px;position:relative;
+  }
+  .step:not(:last-child){border-right:1px solid var(--line);}
+  .step .step-num{font-family:"IBM Plex Mono",monospace;color:var(--mute);font-size:13px;}
+  .step h3{font-size:15px;font-weight:600;margin:12px 0 8px;}
+  .step p{font-size:13.5px;color:var(--mute);line-height:1.55;margin:0;}
+
+  /* ---------- contact ---------- */
+  .contact-panel{
+    border:1px solid var(--line);background:var(--panel);
+    display:grid;grid-template-columns:1.1fr 1fr;
+  }
+  .contact-left{padding:48px;border-right:1px solid var(--line);}
+  .contact-left h2{font-size:28px;font-weight:600;margin-bottom:16px;}
+  .contact-left p{color:var(--mute);font-size:15px;line-height:1.6;margin-bottom:30px;max-width:420px;}
+  .contact-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px;}
+  .contact-list li{display:flex;gap:14px;align-items:flex-start;font-size:14.5px;}
+  .contact-list .label{color:var(--mute);font-size:11px;letter-spacing:.12em;display:block;margin-bottom:3px;}
+  .contact-list svg{width:18px;height:18px;stroke:var(--signal);flex-shrink:0;margin-top:2px;}
+  .contact-right{padding:48px;display:flex;flex-direction:column;justify-content:center;gap:16px;background:var(--panel-2);}
+  .contact-right .mono{font-size:12px;color:var(--signal);letter-spacing:.14em;}
+  .contact-right h3{font-size:20px;font-weight:600;margin:6px 0 4px;}
+  .contact-right p{color:var(--mute);font-size:14px;line-height:1.55;margin:0 0 10px;}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-row .mono{font-size:12px;color:var(--mute);}
+  .foot-links{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:13px;}
+  .foot-links a{color:var(--mute);text-decoration:none;}
+  .foot-links a:hover{color:var(--paper);}
+
+  @media (max-width:920px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .why{grid-template-columns:repeat(2,1fr);}
+    .process{flex-direction:column;}
+    .step:not(:last-child){border-right:none;border-bottom:1px solid var(--line);}
+    .contact-panel{grid-template-columns:1fr;}
+    .contact-left{border-right:none;border-bottom:1px solid var(--line);}
+  }
+  @media (max-width:640px){
+    .navlinks{display:none;}
+    .grid{grid-template-columns:1fr;}
+    .why{grid-template-columns:1fr;}
+    .contact-left,.contact-right{padding:32px 24px;}
+    .hero{padding:64px 0 70px;}
+    section{padding:64px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="17" cy="17" r="16" stroke="#2a3340"/>
+        <circle cx="17" cy="17" r="5.5" fill="#f6a623"/>
+        <path d="M17 3V8M17 26V31M3 17H8M26 17H31M7 7L10.5 10.5M27 27L23.5 23.5M27 7L23.5 10.5M7 27L10.5 23.5" stroke="#3ed6c0" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-word">
+        <span class="l1">Sunshine Systems</span>
+        <span class="l2 mono">PROJETOS</span>
+      </span>
+    </a>
+    <ul class="navlinks">
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#diferenciais">Diferenciais</a></li>
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a class="nav-cta" href="https://wa.me/5511982933550" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.62-.6-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09 1-2.38c.26-.28.57-.35.76-.35s.38 0 .55.01c.18.01.41-.07.64.49.24.58.81 2 .88 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.48-.14.14-.28.29-.12.56.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.55.73 1.81.86.27.14.44.21.51.32.07.12.07.68-.17 1.36z"/></svg>
+      Falar no WhatsApp
+    </a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <svg class="hero-bg" viewBox="0 0 1180 520" preserveAspectRatio="xMaxYMin slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path class="trace-line" d="M700 0 V60 H860 V140 H1030" fill="none" />
+      <path class="trace-line" d="M780 0 V110 H940 V190 H1180" fill="none" />
+      <path class="trace-line live" d="M620 0 V40 H760 V200 H900 V280" fill="none" />
+      <path class="trace-line" d="M900 520 V400 H1040 V320 H1180" fill="none" />
+      <path class="trace-line" d="M980 520 V440 H1120 V380" fill="none" />
+      <path class="pulse" d="M700 0 V60 H860 V140 H1030" stroke="#f6a623" stroke-width="1.6" fill="none"/>
+      <path class="pulse d2" d="M780 0 V110 H940 V190 H1180" stroke="#3ed6c0" stroke-width="1.6" fill="none"/>
+      <path class="pulse d3" d="M620 0 V40 H760 V200 H900 V280" stroke="#f6a623" stroke-width="1.6" fill="none"/>
+      <path class="pulse d4" d="M900 520 V400 H1040 V320 H1180" stroke="#3ed6c0" stroke-width="1.6" fill="none"/>
+      <circle class="trace-dot" cx="1030" cy="140" r="3"/>
+      <circle class="trace-dot" cx="1180" cy="190" r="3"/>
+      <circle class="trace-dot" cx="900" cy="280" r="3"/>
+      <circle class="trace-dot" cx="1180" cy="320" r="3"/>
+      <circle class="trace-dot" cx="1120" cy="380" r="3"/>
+    </svg>
+    <div class="wrap hero-inner">
+      <span class="eyebrow mono">ELÉTRICA · SEGURANÇA · AUTOMAÇÃO</span>
+      <h1>Cada sistema da sua obra, <em>ligado e funcionando</em> como deveria.</h1>
+      <p>Instalação e manutenção de elétrica, câmeras, interfonia, controle de acesso, automatizadores de portão, redes e automação — tudo com uma equipe só, do projeto ao suporte.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://wa.me/5511982933550" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.62-.6-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09 1-2.38c.26-.28.57-.35.76-.35s.38 0 .55.01c.18.01.41-.07.64.49.24.58.81 2 .88 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.48-.14.14-.28.29-.12.56.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.55.73 1.81.86.27.14.44.21.51.32.07.12.07.68-.17 1.36z"/></svg>
+          Pedir orçamento
+        </a>
+        <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono">O QUE INSTALAMOS E MANTEMOS</span>
+        <h2>Um serviço para cada sistema do imóvel</h2>
+        <p>Atendemos residências, condomínios e comércios com equipe própria — sem terceirização, sem intermediário.</p>
+      </div>
+
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+            <span class="card-code mono">EL</span>
+          </div>
+          <h3>Elétrica</h3>
+          <p>Instalações novas, reformas, quadros de distribuição e correção de problemas elétricos.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="1.5"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><circle cx="12" cy="13" r="2.3"/></svg>
+            <span class="card-code mono">CE</span>
+          </div>
+          <h3>Comandos elétricos</h3>
+          <p>Painéis de comando, quadros de força e automação de motores e equipamentos.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h9l4-2.5v13L14 14H5a2 2 0 0 1-2-2V8z"/><circle cx="9.5" cy="10" r="2"/></svg>
+            <span class="card-code mono">CAM</span>
+          </div>
+          <h3>Câmeras</h3>
+          <p>Projeto e instalação de CFTV, monitoramento remoto e gravação em nuvem ou local.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="10" height="18" rx="1.5"/><circle cx="9" cy="17" r=".6" fill="currentColor" stroke="none"/><path d="M17 8c2 1.6 2 6.4 0 8" stroke-linecap="round"/></svg>
+            <span class="card-code mono">IF</span>
+          </div>
+          <h3>Interfonia</h3>
+          <p>Porteiros eletrônicos e interfones para casas, prédios e condomínios.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10l8-6 8 6v10"/><path d="M9 20v-6h6v6"/></svg>
+            <span class="card-code mono">AUT</span>
+          </div>
+          <h3>Automatizadores</h3>
+          <p>Motores para portões sociais e de garagem, com controles e acionamento remoto.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg>
+            <span class="card-code mono">RC</span>
+          </div>
+          <h3>Redes de computadores</h3>
+          <p>Cabeamento estruturado, Wi-Fi e infraestrutura de rede para casa e empresa.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="10" rx="1.5"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/><circle cx="12" cy="15" r="1.4"/></svg>
+            <span class="card-code mono">CA</span>
+          </div>
+          <h3>Controle de acesso</h3>
+          <p>Fechaduras eletrônicas, biometria, tags e catracas para controlar quem entra.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>
+            <span class="card-code mono">AUTO</span>
+          </div>
+          <h3>Automação</h3>
+          <p>Integração de iluminação, portões e acessos em um só sistema, com comando remoto.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="diferenciais">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono">POR QUE A SUNSHINE SYSTEMS</span>
+        <h2>Menos telefonemas, mais sistema funcionando</h2>
+      </div>
+      <div class="why">
+        <div class="why-item">
+          <span class="num mono">EQUIPE</span>
+          <h3>Time próprio</h3>
+          <p>Um único time cuida de elétrica, câmeras e automação — sem repassar seu projeto para terceiros.</p>
+        </div>
+        <div class="why-item">
+          <span class="num mono">SUPORTE</span>
+          <h3>Manutenção contínua</h3>
+          <p>Depois da instalação, seguimos disponíveis para ajustes, manutenção preventiva e chamados.</p>
+        </div>
+        <div class="why-item">
+          <span class="num mono">PROJETO</span>
+          <h3>Sistemas integrados</h3>
+          <p>Câmeras, interfone, acesso e automação conversando entre si, não instalações isoladas.</p>
+        </div>
+        <div class="why-item">
+          <span class="num mono">GARANTIA</span>
+          <h3>Serviço garantido</h3>
+          <p>Material e mão de obra com garantia — o que instalamos, respondemos por isso.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono">DO PRIMEIRO CONTATO À ENTREGA</span>
+        <h2>Como funciona</h2>
+      </div>
+      <div class="process">
+        <div class="step">
+          <span class="step-num mono">01</span>
+          <h3>Diagnóstico</h3>
+          <p>Você descreve a obra ou o problema, presencial ou por foto/vídeo.</p>
+        </div>
+        <div class="step">
+          <span class="step-num mono">02</span>
+          <h3>Orçamento</h3>
+          <p>Enviamos escopo e valor fechado, sem custo surpresa depois.</p>
+        </div>
+        <div class="step">
+          <span class="step-num mono">03</span>
+          <h3>Instalação</h3>
+          <p>Equipe própria executa no prazo combinado, com o local protegido.</p>
+        </div>
+        <div class="step">
+          <span class="step-num mono">04</span>
+          <h3>Suporte</h3>
+          <p>Testes com você presente e canal aberto para manutenção futura.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="wrap">
+      <div class="contact-panel">
+        <div class="contact-left">
+          <h2>Vamos falar sobre a sua obra</h2>
+          <p>Atendemos residências, condomínios e comércios. Envie o endereço e o que precisa instalar ou consertar — respondemos com um orçamento.</p>
+          <ul class="contact-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 3a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .7a2 2 0 0 1 1.6 2z"/></svg>
+              <span><span class="label mono">WHATSAPP</span>(11) 98293-3550</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6 8 7 8-7"/></svg>
+              <span><span class="label mono">E-MAIL</span>contato@sunshinesystems.com.br — atualizar</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span><span class="label mono">ÁREA DE ATENDIMENTO</span>São Paulo e região — atualizar</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3ed6c0" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="#3ed6c0" stroke="none"/></svg>
+              <span><span class="label mono">INSTAGRAM</span><a href="https://www.instagram.com/sunshinesystemsprojetos/" target="_blank" rel="noopener">@sunshinesystemsprojetos</a></span>
+            </li>
+          </ul>
+        </div>
+        <div class="contact-right">
+          <span class="mono">RESPOSTA RÁPIDA</span>
+          <h3>Fale agora pelo WhatsApp</h3>
+          <p>É o canal mais rápido para orçamento e agendamento de visita técnica.</p>
+          <a class="btn btn-primary" href="https://wa.me/5511982933550" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.62-.6-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09 1-2.38c.26-.28.57-.35.76-.35s.38 0 .55.01c.18.01.41-.07.64.49.24.58.81 2 .88 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.48-.14.14-.28.29-.12.56.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.55.73 1.81.86.27.14.44.21.51.32.07.12.07.68-.17 1.36z"/></svg>
+            Chamar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">© 2026 SUNSHINE SYSTEMS PROJETOS — TODOS OS DIREITOS RESERVADOS</span>
+    <ul class="foot-links">
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="https://www.instagram.com/sunshinesystemsprojetos/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>
